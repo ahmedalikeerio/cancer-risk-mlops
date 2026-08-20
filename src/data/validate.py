@@ -1,7 +1,8 @@
-from datasets import load_dataset
+from pathlib import Path
+import pandas as pd
 
 
-DATASET_ID = "tarekmasryo/cancer-risk-factors-data"
+RAW_DATA_PATH = Path("data/raw/cancer_risk.csv")
 
 EXPECTED_COLUMNS = {
     "Patient_ID",
@@ -48,8 +49,11 @@ SCORE_COLUMNS = [
 
 
 def validate_dataset():
-    dataset = load_dataset(DATASET_ID)
-    df = dataset["train"].to_pandas()
+    df = pd.read_csv(RAW_DATA_PATH)
+    if not RAW_DATA_PATH.exists():
+        raise FileNotFoundError(
+            f"Dataset not found {RAW_DATA_PATH}"
+        )
 
     errors = []
 
