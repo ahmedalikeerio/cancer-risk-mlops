@@ -1,0 +1,24 @@
+schema: '2.0'
+stages:
+  vlaidate:
+    cmd: python src/data/validate.py
+    deps:
+    - path: data/raw/cancer_risk.csv
+      hash: md5
+      md5: 60bffaffd740ab428074bb2049582c05
+      size: 141851
+    - path: src/data/validate.py
+      hash: md5
+      md5: 6d25e36dcc062b8bffeabb00d5c8af58
+      size: 3380
+  validate:
+    cmd: python src/data/validate.py
+    deps:
+    - path: data/raw/cancer_risk.csv
+      hash: md5
+      md5: 60bffaffd740ab428074bb2049582c05
+      size: 141851
+    - path: src/data/validate.py
+      hash: md5
+      md5: 6d25e36dcc062b8bffeabb00d5c8af58
+      size: 3380

@@ -1,0 +1,6 @@
+stages:
+  validate:
+    cmd: python src/data/validate.py
+    deps:
+      - src/data/validate.py
+      - data/raw/cancer_risk.csv
