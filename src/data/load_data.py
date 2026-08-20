@@ -1,27 +1,24 @@
+from pathlib import Path
+
+import pandas as pd
 from datasets import load_dataset
 
-DATASET_ID = "tarekmasryo/cancer-risk-factors-data"
 
-def load_cancer_dataset():
-    '''loading the cancer dataset from the Hugging Face Hub'''
+DATASET_ID = "tarekmasryo/cancer-risk-factors-data"
+RAW_DATA_PATH = Path("data/raw/cancer_risk.csv")
+
+
+def load_and_save_dataset():
     dataset = load_dataset(DATASET_ID)
 
-    return dataset
+    df = dataset["train"].to_pandas()
 
-if __name__=='__main__':
-    dataset=load_cancer_dataset()
+    RAW_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(RAW_DATA_PATH, index=False)
 
-    print("\n Dataset ")
-    print(dataset)
+    print(f"Dataset saved to: {RAW_DATA_PATH}")
+    print(f"Shape: {df.shape}")
 
-    print("\n Train Split ")
-    print(dataset['train'])
 
-    print('\n Dataset Features :')
-    print(dataset['train'].features)
-
-    print('\n Dataset columns: ')
-    print(dataset['train'].column_names)
-
-    print("\n Example Record: ")
-    print(dataset['train'][2])
+if __name__ == "__main__":
+    load_and_save_dataset()

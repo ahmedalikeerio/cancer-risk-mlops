@@ -20,9 +20,9 @@ venv/
 # IDE
 .vscode/
 .idea/
-
+ vcxcvbnmnbv cvbnncxh   
 # Data
-data/raw/*
+data/raw/*.csv
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
@@ -35,3 +35,4 @@ models/
 
 # DVC cache
 .dvc/cache/
+

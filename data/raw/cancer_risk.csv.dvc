@@ -1,0 +1,5 @@
+outs:
+- md5: 60bffaffd740ab428074bb2049582c05
+  size: 141851
+  hash: md5
+  path: cancer_risk.csv
