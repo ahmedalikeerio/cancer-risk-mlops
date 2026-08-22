@@ -23,7 +23,8 @@ venv/
  vcxcvbnmnbv cvbnncxh   
 # Data
 data/raw/*.csv
-data/processed/*
+data/processed/*.csv
+data/processed/*.joblib
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 

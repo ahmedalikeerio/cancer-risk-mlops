@@ -1,3 +1,5 @@
 datasets
 pandas
 pyarrow
+scikit-learn
+joblib
