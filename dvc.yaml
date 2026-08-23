@@ -4,3 +4,12 @@ stages:
     deps:
       - src/data/validate.py
       - data/raw/cancer_risk.csv
+  
+  preprocess:
+    cmd: python src/features/preprocess.py
+    deps:
+      - src/features/preprocess.py
+      - data/raw/cancer_risk.csv
+    outs:
+      - data/processed/cancer_risk_processed.csv
+      - data/processed/preprocessor.joblib
