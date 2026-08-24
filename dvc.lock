@@ -25,20 +25,48 @@ stages:
   preprocess:
     cmd: python src/features/preprocess.py
     deps:
-    - path: data/raw/cancer_risk.csv
+    - path: data/split/test.csv
       hash: md5
-      md5: 60bffaffd740ab428074bb2049582c05
-      size: 141851
+      md5: 5e685ae3e63dc81d5b11301655ff21ce
+      size: 28609
+    - path: data/split/train.csv
+      hash: md5
+      md5: 530ddad62d43b9ddab8b4c8892625ab0
+      size: 113531
     - path: src/features/preprocess.py
       hash: md5
-      md5: f13fa14154a5fb4cb848042c6d84cf31
-      size: 1621
+      md5: 364f365b121a0e98cb7bc557acc98add
+      size: 2552
     outs:
-    - path: data/processed/cancer_risk_processed.csv
-      hash: md5
-      md5: f6e3d6cb0fcd6867f4fd9ad98671bd6c
-      size: 195829
     - path: data/processed/preprocessor.joblib
       hash: md5
       md5: fc5d8a6b97e9054efe81589b30776530
       size: 3197
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 59ebdc9f8cca2c7892bb266a1cfc2574
+      size: 39655
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 8acab7e39a6b0a12f4fb07ab446e3a21
+      size: 156765
+  split:
+    cmd: python src/data/split.py
+    deps:
+    - path: data/raw/cancer_risk.csv
+      hash: md5
+      md5: 60bffaffd740ab428074bb2049582c05
+      size: 141851
+    - path: src/data/split.py
+      hash: md5
+      md5: 06d19be205cb7313438711bea7d714bf
+      size: 973
+    outs:
+    - path: data/split/test.csv
+      hash: md5
+      md5: 5e685ae3e63dc81d5b11301655ff21ce
+      size: 28609
+    - path: data/split/train.csv
+      hash: md5
+      md5: 530ddad62d43b9ddab8b4c8892625ab0
+      size: 113531

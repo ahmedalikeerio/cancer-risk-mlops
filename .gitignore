@@ -20,13 +20,14 @@ venv/
 # IDE
 .vscode/
 .idea/
- vcxcvbnmnbv cvbnncxh   
+
 # Data
 data/raw/*.csv
 data/processed/*.csv
 data/processed/*.joblib
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+data/split/*.csv
 
 # ML artifacts
 mlruns/

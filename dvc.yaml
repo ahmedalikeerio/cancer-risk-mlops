@@ -5,11 +5,22 @@ stages:
       - src/data/validate.py
       - data/raw/cancer_risk.csv
   
+  split:
+    cmd: python src/data/split.py
+    deps:
+      - src/data/split.py
+      - data/raw/cancer_risk.csv
+    outs:
+      - data/split/train.csv
+      - data/split/test.csv
+  
   preprocess:
     cmd: python src/features/preprocess.py
     deps:
       - src/features/preprocess.py
-      - data/raw/cancer_risk.csv
+      - data/split/train.csv
+      - data/split/test.csv
     outs:
-      - data/processed/cancer_risk_processed.csv
+      - data/processed/train_processed.csv
+      - data/processed/test_processed.csv
       - data/processed/preprocessor.joblib
