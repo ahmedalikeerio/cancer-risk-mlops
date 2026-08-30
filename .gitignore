@@ -31,10 +31,12 @@ data/split/*.csv
 
 # ML artifacts
 mlruns/
-models/
+reports/
+# models/
 *.pkl
 *.joblib
 
 # DVC cache
 .dvc/cache/
 
+/models

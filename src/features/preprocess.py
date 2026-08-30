@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 from joblib import dump
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
 TRAIN_PATH = Path("data/split/train.csv")
@@ -43,7 +43,7 @@ def preprocess_data():
         transformers=[
             (
                 "numerical",
-                "passthrough",
+                StandardScaler(),
                 numerical_columns,
             ),
             (
