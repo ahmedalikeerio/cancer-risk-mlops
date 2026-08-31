@@ -32,8 +32,17 @@ stages:
       - src/models/evaluate.py
       - data/processed/train_processed.csv
       - data/processed/test_processed.csv
-    outs:
-      - models
     metrics:
       - reports/metrics.json:
+          cache: false
+
+  tune:
+    cmd: python -m src.models.tune
+    deps:
+      - src/models/tune.py
+      - src/models/evaluate.py
+      - data/processed/train_processed.csv
+      - data/processed/test_processed.csv
+    metrics:
+      - reports/tuning_results.json:
           cache: false

@@ -99,3 +99,27 @@ stages:
       hash: md5
       md5: a7f268f1640f4b3755dd341cd4b2e56f
       size: 700
+  tune:
+    cmd: python -m src.models.tune
+    deps:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 79f8e6dc36fa9cf1eed5a444f0a74721
+      size: 144933
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 033878b31e09196713c3c8ac2c17c350
+      size: 578126
+    - path: src/models/evaluate.py
+      hash: md5
+      md5: df81ffe0103ecad5af8e4a47024c6d37
+      size: 2888
+    - path: src/models/tune.py
+      hash: md5
+      md5: e8275b91e9ed722c0d9a7c34585d4575
+      size: 8399
+    outs:
+    - path: reports/tuning_results.json
+      hash: md5
+      md5: 0622fd2351d3d168ba6919f587ef0b9a
+      size: 1585
