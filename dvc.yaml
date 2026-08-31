@@ -46,3 +46,21 @@ stages:
     metrics:
       - reports/tuning_results.json:
           cache: false
+
+  train_final:
+    cmd: python -m src.models.train_final
+    deps:
+      - src/models/train_final.py
+      - data/processed/train_processed.csv
+    outs:
+      - models/final_model.joblib
+
+  evaluate_final:
+    cmd: python -m src.models.evaluate_final
+    deps:
+      - src/models/evaluate_final.py
+      - models/final_model.joblib
+      - data/processed/test_processed.csv
+    metrics:
+      - reports/final_model_metrics.json:
+          cache: false

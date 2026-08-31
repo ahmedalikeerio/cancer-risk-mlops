@@ -123,3 +123,39 @@ stages:
       hash: md5
       md5: 0622fd2351d3d168ba6919f587ef0b9a
       size: 1585
+  train_final:
+    cmd: python -m src.models.train_final
+    deps:
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 033878b31e09196713c3c8ac2c17c350
+      size: 578126
+    - path: src/models/train_final.py
+      hash: md5
+      md5: 232b50491cd255f4bf9ad6576407ea9f
+      size: 1118
+    outs:
+    - path: models/final_model.joblib
+      hash: md5
+      md5: 4274c13f96002d1217e8145897bc56f2
+      size: 2415
+  evaluate_final:
+    cmd: python -m src.models.evaluate_final
+    deps:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 79f8e6dc36fa9cf1eed5a444f0a74721
+      size: 144933
+    - path: models/final_model.joblib
+      hash: md5
+      md5: 4274c13f96002d1217e8145897bc56f2
+      size: 2415
+    - path: src/models/evaluate_final.py
+      hash: md5
+      md5: 11e0c1d191106c522c95c2edd1b5ff5e
+      size: 2639
+    outs:
+    - path: reports/final_model_metrics.json
+      hash: md5
+      md5: 4069fcd6b3e6b185db039c2ba12cd38e
+      size: 294
