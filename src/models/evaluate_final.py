@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
+
 import joblib
+import mlflow
 import pandas as pd
 
 from sklearn.metrics import (
@@ -15,12 +17,11 @@ from sklearn.metrics import (
 
 TEST_PATH = Path("data/processed/test_processed.csv")
 MODEL_PATH = Path("models/final_model.joblib")
-
-METRICS_PATH = Path(
-    "reports/final_model_metrics.json"
-)
+METRICS_PATH = Path("reports/final_model_metrics.json")
 
 TARGET = "Risk_Level"
+
+MLFLOW_EXPERIMENT = "cancer-risk-final-model"
 
 
 def main():
@@ -29,19 +30,15 @@ def main():
     print("FINAL MODEL EVALUATION")
     print("=" * 60)
 
-    # Load test data
     test_df = pd.read_csv(TEST_PATH)
 
     X_test = test_df.drop(columns=[TARGET])
     y_test = test_df[TARGET]
 
-    # Load model
     model = joblib.load(MODEL_PATH)
 
-    # Prediction
     y_pred = model.predict(X_test)
 
-    # Metrics
     report = classification_report(
         y_test,
         y_pred,
@@ -50,46 +47,52 @@ def main():
     )
 
     metrics = {
-        "accuracy": accuracy_score(
-            y_test,
-            y_pred,
+        "accuracy": float(
+            accuracy_score(y_test, y_pred)
         ),
-        "precision_weighted": precision_score(
-            y_test,
-            y_pred,
-            average="weighted",
-            zero_division=0,
+        "precision_weighted": float(
+            precision_score(
+                y_test,
+                y_pred,
+                average="weighted",
+                zero_division=0,
+            )
         ),
-        "recall_weighted": recall_score(
-            y_test,
-            y_pred,
-            average="weighted",
-            zero_division=0,
+        "recall_weighted": float(
+            recall_score(
+                y_test,
+                y_pred,
+                average="weighted",
+                zero_division=0,
+            )
         ),
-        "f1_weighted": f1_score(
-            y_test,
-            y_pred,
-            average="weighted",
-            zero_division=0,
+        "f1_weighted": float(
+            f1_score(
+                y_test,
+                y_pred,
+                average="weighted",
+                zero_division=0,
+            )
         ),
-        "f1_macro": f1_score(
-            y_test,
-            y_pred,
-            average="macro",
-            zero_division=0,
+        "f1_macro": float(
+            f1_score(
+                y_test,
+                y_pred,
+                average="macro",
+                zero_division=0,
+            )
         ),
-        "high_risk_precision": report[
-            "High"
-        ]["precision"],
-        "high_risk_recall": report[
-            "High"
-        ]["recall"],
-        "high_risk_f1": report[
-            "High"
-        ]["f1-score"],
+        "high_risk_precision": float(
+            report["High"]["precision"]
+        ),
+        "high_risk_recall": float(
+            report["High"]["recall"]
+        ),
+        "high_risk_f1": float(
+            report["High"]["f1-score"]
+        ),
     }
 
-    # Print results
     print("\n===== FINAL MODEL RESULTS =====")
 
     for name, value in metrics.items():
@@ -113,7 +116,7 @@ def main():
         )
     )
 
-    # Save metrics
+    # Save local metrics
     METRICS_PATH.parent.mkdir(
         parents=True,
         exist_ok=True,
@@ -126,9 +129,32 @@ def main():
             indent=4,
         )
 
+    # Log metrics to MLflow
+    mlflow.set_experiment(
+        MLFLOW_EXPERIMENT
+    )
+
+    with mlflow.start_run(
+        run_name="final_model_evaluation"
+    ):
+
+        mlflow.log_metrics(metrics)
+
+        mlflow.set_tag(
+            "model_name",
+            "CancerRiskModel",
+        )
+
+        mlflow.set_tag(
+            "evaluation_type",
+            "final_test_evaluation",
+        )
+
     print(
         f"\nSaved metrics: {METRICS_PATH}"
     )
+
+    print("Metrics logged to MLflow.")
 
 
 if __name__ == "__main__":
